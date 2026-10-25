@@ -16,6 +16,10 @@ public class EditModel : PageModel
 
     [BindProperty]
     public Book Book { get; set; } = default!;
+    public List<Category> Categories { get; set; } = new List<Category>();
+
+    [BindProperty]
+    public List<int> SelectedCategoryIds { get; set; } = new List<int>();
 
     public async Task<IActionResult> OnGetAsync(int? id)
     {
@@ -30,6 +34,12 @@ public class EditModel : PageModel
             return NotFound();
         }
         Book = book;
+        Categories = await _context.Category.ToListAsync();
+
+        SelectedCategoryIds = await _context.BookCategory
+            .Where(bc => bc.BookID == book.ID)
+            .Select(bc => bc.CategoryID)
+            .ToListAsync();
         return Page();
     }
 
@@ -43,6 +53,20 @@ public class EditModel : PageModel
         }
 
         _context.Attach(Book).State = EntityState.Modified;
+        var oldCategories = await _context.BookCategory
+    .Where(bc => bc.BookID == Book.ID)
+    .ToListAsync();
+
+        _context.BookCategory.RemoveRange(oldCategories);
+
+        foreach (var categoryId in SelectedCategoryIds)
+        {
+            _context.BookCategory.Add(new BookCategory
+            {
+                BookID = Book.ID,
+                CategoryID = categoryId
+            });
+        }
 
         try
         {

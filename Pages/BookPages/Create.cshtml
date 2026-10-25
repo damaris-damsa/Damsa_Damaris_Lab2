@@ -29,6 +29,18 @@
                 <span asp-validation-for="Book.Price" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label>Categories</label>
+                @foreach (var category in Model.Categories)
+                {
+                    <div>
+                        <input type="checkbox"
+                               name="SelectedCategoryIds"
+                               value="@category.ID" />
+                        <label>@category.CategoryName</label>
+                    </div>
+                }
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
