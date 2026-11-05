@@ -9,6 +9,14 @@ builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider
+        .GetRequiredService<Damsa_Damaris_Lab2Context>();
+
+    Damsa_Damaris_Lab2.Models.SeedData.Initialize(context);
+}
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

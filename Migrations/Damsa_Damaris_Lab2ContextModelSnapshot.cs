@@ -13,7 +13,26 @@ namespace Damsa_Damaris_Lab2.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "10.0.13");
+            modelBuilder.HasAnnotation("ProductVersion", "10.0.14");
+
+            modelBuilder.Entity("Damsa_Damaris_Lab2.Models.Author", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Author");
+                });
 
             modelBuilder.Entity("Damsa_Damaris_Lab2.Models.Book", b =>
                 {
@@ -25,14 +44,24 @@ namespace Damsa_Damaris_Lab2.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int?>("AuthorID")
+                        .HasColumnType("INTEGER");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("TEXT");
+
+                    b.Property<int?>("PublisherID")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("AuthorID");
+
+                    b.HasIndex("PublisherID");
 
                     b.ToTable("Book");
                 });
@@ -73,6 +102,36 @@ namespace Damsa_Damaris_Lab2.Migrations
                     b.ToTable("Category");
                 });
 
+            modelBuilder.Entity("Damsa_Damaris_Lab2.Models.Publisher", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("PublisherName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Publisher");
+                });
+
+            modelBuilder.Entity("Damsa_Damaris_Lab2.Models.Book", b =>
+                {
+                    b.HasOne("Damsa_Damaris_Lab2.Models.Author", "AuthorDetails")
+                        .WithMany("Books")
+                        .HasForeignKey("AuthorID");
+
+                    b.HasOne("Damsa_Damaris_Lab2.Models.Publisher", "Publisher")
+                        .WithMany("Books")
+                        .HasForeignKey("PublisherID");
+
+                    b.Navigation("AuthorDetails");
+
+                    b.Navigation("Publisher");
+                });
+
             modelBuilder.Entity("Damsa_Damaris_Lab2.Models.BookCategory", b =>
                 {
                     b.HasOne("Damsa_Damaris_Lab2.Models.Book", "Book")
@@ -92,6 +151,11 @@ namespace Damsa_Damaris_Lab2.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("Damsa_Damaris_Lab2.Models.Author", b =>
+                {
+                    b.Navigation("Books");
+                });
+
             modelBuilder.Entity("Damsa_Damaris_Lab2.Models.Book", b =>
                 {
                     b.Navigation("BookCategories");
@@ -100,6 +164,11 @@ namespace Damsa_Damaris_Lab2.Migrations
             modelBuilder.Entity("Damsa_Damaris_Lab2.Models.Category", b =>
                 {
                     b.Navigation("BookCategories");
+                });
+
+            modelBuilder.Entity("Damsa_Damaris_Lab2.Models.Publisher", b =>
+                {
+                    b.Navigation("Books");
                 });
 #pragma warning restore 612, 618
         }

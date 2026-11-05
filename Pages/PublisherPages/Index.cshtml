@@ -1,0 +1,55 @@
+﻿@page
+@model Damsa_Damaris_Lab2.Pages.PublisherPages.IndexModel
+
+@{
+    ViewData["Title"] = "Edituri";
+}
+
+<h1>Edituri</h1>
+
+<h2>Lista editurilor</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Numele editurii</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.PublisherData.Publishers)
+        {
+            <tr class="@(item.ID == Model.PublisherID ? "table-success" : "")">
+                <td>@item.PublisherName</td>
+                <td>
+                    <a asp-page="./Index" asp-route-id="@item.ID">
+                        Select
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (Model.PublisherData.Books != null)
+{
+    <h2>Cartile editurii selectate</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Titlu</th>
+                <th>Autor</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in Model.PublisherData.Books)
+            {
+                <tr>
+                    <td>@book.Title</td>
+                    <td>@(book.AuthorDetails?.FullName ?? book.Author)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

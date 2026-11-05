@@ -7,4 +7,9 @@ public class Damsa_Damaris_Lab2Context(DbContextOptions<Damsa_Damaris_Lab2Contex
     public DbSet<Damsa_Damaris_Lab2.Models.Category> Category { get; set; } = default!;
 
     public DbSet<Damsa_Damaris_Lab2.Models.BookCategory> BookCategory { get; set; } = default!;
+
+    public DbSet<Damsa_Damaris_Lab2.Models.Publisher> Publisher { get; set; } = default!;
+
+    public DbSet<Damsa_Damaris_Lab2.Models.Author> Author { get; set; } = default!;
+
 }
