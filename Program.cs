@@ -1,8 +1,15 @@
 using Microsoft.EntityFrameworkCore;
+using Damsa_Damaris_Lab2.Data;
+using Microsoft.AspNetCore.Identity;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("Damsa_Damaris_Lab2Context") ?? throw new InvalidOperationException("Connection string 'Damsa_Damaris_Lab2Context' not found.");
 
 builder.Services.AddDbContext<Damsa_Damaris_Lab2Context>(options => options.UseSqlite(connectionString));
+
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<LibraryIdentityContext>();
+
+builder.Services.AddDbContext<LibraryIdentityContext>(options =>
+    options.UseSqlite(connectionString));
 
 // Add services to the container.
 builder.Services.AddRazorPages();
