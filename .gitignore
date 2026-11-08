@@ -428,3 +428,4 @@ FodyWeavers.xsd
 #*.lscache
 /books.db-shm
 /books.db-wal
+/books.db
