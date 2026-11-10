@@ -54,6 +54,9 @@ namespace Damsa_Damaris_Lab2.Migrations
                     b.Property<int?>("PublisherID")
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime?>("PublishingDate")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -134,6 +137,7 @@ namespace Damsa_Damaris_Lab2.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Adress")
+                        .HasMaxLength(70)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
@@ -141,9 +145,11 @@ namespace Damsa_Damaris_Lab2.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("FirstName")
+                        .HasMaxLength(30)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
+                        .HasMaxLength(30)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Phone")

@@ -125,6 +125,8 @@ public class RegisterModel : PageModel
             {
                 _logger.LogInformation("User created a new account with password.");
 
+                var roleResult = await _userManager.AddToRoleAsync(user, "User");
+
                 var member = new Damsa_Damaris_Lab2.Models.Member
                 {
                     Email = Input.Email
